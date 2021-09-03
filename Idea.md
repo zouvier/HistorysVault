@@ -21,7 +21,7 @@ Another Use case for History’s Vault allows streamers to further connect with 
 
 Major League gamer: James)
 
-	`James is a highly skilled gamer who is streaming on twitch and just happens to perform a fantastic feat in a game. This moment causes the entire chat room to blow up and with hundreds of words spamming every second. Everyone is euphoric and can’t believe that James just pulled that off. After streaming, James takes that legendary clip and puts it on History’s Vault. James moment is now on the blockchain, and the viewers who witnessed that moment can now bid on this piece of history. With that, they’ll now own a piece of history connected to their favorite gamer. `
+`James is a highly skilled gamer who is streaming on twitch and just happens to perform a fantastic feat in a game. This moment causes the entire chat room to blow up and with hundreds of words spamming every second. Everyone is euphoric and can’t believe that James just pulled that off. After streaming, James takes that legendary clip and puts it on History’s Vault. James moment is now on the blockchain, and the viewers who witnessed that moment can now bid on this piece of history. With that, they’ll now own a piece of history connected to their favorite gamer. `
 
 
 These are only some of the possible use cases on History’s Vault. There are plenty more to come.
