@@ -1,4 +1,4 @@
-BHistory’s Vault
+History’s Vault
 
 
  History’s Vault is an NFT site for Photographers, Journalists, and artists to tell their stories without mainstream media and news outlets influencing their art. 
