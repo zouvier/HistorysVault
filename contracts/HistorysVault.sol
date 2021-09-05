@@ -4,7 +4,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract HistorysVault is ERC721 {
     
-    ERC721(_name = 'Historys Vault');
+    constructor() ERC721("HsVault", "HSV") public {
+
+    }
 
     
 }
