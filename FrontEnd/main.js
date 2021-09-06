@@ -1,11 +1,11 @@
 // key for initializing server. 
-//TODO: change during production
+//TODO: change for production
 Moralis.initialize('Izr6Zce1IB7ptfLuLMD8h57idTAMcRW4OfK1zCp4');
 Moralis.serverURL = 'https://92cgorxrw6xn.bigmoralis.com:2053/server'
-//@dev: authenticates the user and asks them to login with metamask, and also logout
-const user = async() => await Moralis.User.current()
-const userLogOut = async () => await Moralis.User.logOut();
 
+//@dev: authenticates the user and asks them to login with metamask, and also logout
+//const userLogOut = async () => await Moralis.User.logOut();
+//user = await Moralis.User.current()
 //@dev: helper function to hide/show elements
 hideElement = (element) => element.style.display = 'none';
 showElement = (element) => element.style.display = 'block';
@@ -15,28 +15,25 @@ showElement = (element) => element.style.display = 'block';
 const init = async () => {
     hideElement(userInfo);
     hideElement(userProfileButton);
-    window.web3 = await Moralis.Web3.authenticate();
-    initUser();
+
     
 }
 
-const initUser = async () => {
-    if(user)
-    {
-        showElement(userProfileButton);
+initUser = async () => {
+    if (await Moralis.User.current()){
         hideElement(userConnectButton);
-    }
-    else
-    {
-        hideElement(userProfileButton);
+        showElement(userProfileButton);
+        
+    }else{
         showElement(userConnectButton);
+        hideElement(userProfileButton);
     }
 }
 
 const logout = async () => {
-    userLogOut();
+    await Moralis.User.logOut();
     hideElement(userInfo);
-    initUser;
+    initUser();
 }
 
 const login = async () => {
@@ -51,27 +48,76 @@ const login = async () => {
 
 
 const openUserInfo = async () => {
-    if(user()){
+    user = await Moralis.User.current()
+
+    if(user){
         showElement(userInfo)
+
+        const email = user.get('email');
+        if(email) {
+            userEmailField.value = email;
+        }
+        else{
+            userEmailField.value = '';
+        }
+
+        userUsernameField.value = user.get('username');
+
+        const userAvatar = user.get('avatar')
+        hideElement(userAvatarImg)
+
+        if(userAvatar)
+        {
+            userAvatarImg.src = userAvatar.url();
+            showElement(userAvatarImg)
+        }
+            
+
+        
     }
     else
     {
-        login();
+        login;
     }
+}
+
+
+const saveUserInfo = async () => {
+    user = await Moralis.User.current()
+    user.set('email',userEmailField.value);
+    user.set('Username', userUsernameField.value);
+
+    if (userAvatarFile.files.length > 0) {
+        const avatar = new Moralis.File(avatar.png, userAvatarFile.files[0]);
+        user.set('avatar', avatar);
+      }
+
+      await user.save();
+      alert('Profile updated!')
+      openUserInfo;
 }
 
 
 
 const userConnectButton = document.getElementById('btn_connect');
-userConnectButton.onclick = login();
+userConnectButton.onclick = login;
 
 
 const userProfileButton = document.getElementById('btn_user_info');
 userProfileButton.onclick = openUserInfo;
 
+const userlogout = document.getElementById('btn_logout');
+userlogout.onclick = logout;
+
+const saveUserProfile = document.getElementById('btn_saveUserInfo');
+saveUserProfile.onclick = saveUserInfo;
 
 const userInfo = document.getElementById('userInfo');
 document.getElementById('btn_closeUserInfo').onclick = () => hideElement(userInfo);
-document.getElementById('btn_logout').onclick = () => logout();
+
+const userUsernameField= document.getElementById('txtUsername');
+const userEmailField= document.getElementById('txtemail');
+const userAvatarField= document.getElementById('imgAvatar');
+const userAvatarFile = document.getElementById('fileAvatar');
 
 init();
