@@ -18,6 +18,7 @@
   "homepage": "https://github.com/zouvier/HistorysVault#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.1",
-    "moralis": "^0.0.42"
+    "bootstrap": "^5.1.0",
+    "moralis": "0.0.42"
   }
 }
