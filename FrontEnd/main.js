@@ -52,6 +52,7 @@ const openUserInfo = async () => {
 
     if(user){
         showElement(userInfo)
+        userUsernameField.value = user.get('username');
 
         const email = user.get('email');
         if(email) {
@@ -61,10 +62,11 @@ const openUserInfo = async () => {
             userEmailField.value = '';
         }
 
-        userUsernameField.value = user.get('username');
+        
 
         const userAvatar = user.get('avatar')
-        hideElement(userAvatarImg)
+        showElement(userAvatarImg)
+        //hideElement(userAvatarImg)
 
         if(userAvatar)
         {
@@ -84,17 +86,17 @@ const openUserInfo = async () => {
 
 const saveUserInfo = async () => {
     user = await Moralis.User.current()
-    user.set('email',userEmailField.value);
-    user.set('Username', userUsernameField.value);
+    user.set('email', userEmailField.value,{ usePost: true });
+    user.set('username', userUsernameField.value,{ usePost: true });
 
     if (userAvatarFile.files.length > 0) {
-        const avatar = new Moralis.File(avatar.png, userAvatarFile.files[0]);
+        const avatar = new Moralis.File("avatar1.png", userAvatarFile.files[0]);
         user.set('avatar', avatar);
-      }
+    }
 
-      await user.save();
-      alert('Profile updated!')
-      openUserInfo;
+    await user.save();
+    alert("User info saved successfully!");
+    openUserInfo();
 }
 
 
