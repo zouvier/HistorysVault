@@ -1,6 +1,6 @@
 // key for initializing server. 
 //TODO: change for production
-Moralis.initialize('Izr6Zce1IB7ptfLuLMD8h57idTAMcRW4OfK1zCp4');
+Moralis.initialize('OGnckOiPNnH7ik1lmvwFpt8S3Dvbz9PPfIovuRf6AMp');
 Moralis.serverURL = 'https://92cgorxrw6xn.bigmoralis.com:2053/server'
 
 //@dev: authenticates the user and asks them to login with metamask, and also logout
