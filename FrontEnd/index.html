@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/landingPage.css">
     <title>History's Vault</title>
 </head>
-<body>
     
-    
-    
-    <Container maxWidth="sm">
-        <div>
-            <!-- buttons-->
-            <button id="btn_connect">Connect wallet</button>
-            <button id="btn_user_info">Profile</button>
-        </div>
-    
+<div>
+    <!-- buttons-->
+    <button class="btn btn-dark" id="btn_connect">Connect wallet</button>
+    <button id="btn_user_info">Profile</button>
+</div>  
+            <section id="landingPage">
+                <div class="container">
+                    <h1 class="text-center text-light display-2 pt-more">For those who seek more</h1>
+                <p class="text-center text-light lead">Engrave your story in time and make a living while doing it</p>
+                </div>
+            </section>
+            
+            
+            
         
-    </Container>
+        
+        
+    
 
     <div id="userInfo">
         <h4>User Profile</h4>
@@ -28,6 +35,7 @@
         <small>Optional</small>
 
         <img src="" id="imgAvatar" alt="" width="50" height="50">
+        
         <label for="fileAvatar">Select Image</label>
         <input type="file" id="fileAvatar">
 
@@ -41,5 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="https://unpkg.com/moralis@0.0.42/dist/moralis.js"></script>
     <script type="text/javascript" src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -1,0 +1,12 @@
+.pt-more {
+  padding-top: 15rem;
+}
+
+#landingPage {
+  background: url("../imgs/isaak-alexandre-karslian--oBfOjcoSVY-unsplash.jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 55rem;
+}
