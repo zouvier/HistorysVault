@@ -1,8 +1,9 @@
 // key for initializing server. 
 //TODO: change for production
-Moralis.initialize('OGnckOiPNnH7ik1lmvwFpt8S3Dvbz9PPfIovuRf6AMp');
-Moralis.serverURL = 'https://92cgorxrw6xn.bigmoralis.com:2053/server'
-
+Moralis.initialize('Izr6Zce1IB7ptfLuLMD8h57idTAMcRW4OfK1zCp4');
+Moralis.serverURL = 'https://92cgorxrw6xn.bigmoralis.com:2053/server';
+var HistorysVault = '0x6BE324C6e52f4818d893760CB7336a14689C96b3';
+var Artifact = '0xEb0860328376E779259C01F99FbF2d230f5dACfE'; 
 //@dev: authenticates the user and asks them to login with metamask, and also logout
 //const userLogOut = async () => await Moralis.User.logOut();
 //user = await Moralis.User.current()
@@ -15,7 +16,9 @@ showElement = (element) => element.style.display = 'block';
 const init = async () => {
     hideElement(userInfo);
     hideElement(userProfileButton);
-    
+    window.web3 = await Moralis.Web3.enable();
+    window.ArtifactContract = new web3.eth.Contract(ArtifactContractABI, Artifact);
+    window.HSMarketPlace = new web3.eth.Contract(HistorysVaultContractABI, HistorysVault); 
 }
 
 initUser = async () => {
@@ -82,6 +85,12 @@ const openUserInfo = async () => {
     }
 }
 
+
+mingArtifact = async (metadataURL) => {
+    const reciept = await ArtifactContract.methods.createArtifactToken(metadataURL).send({from: ethereum.selectedAddress});
+    console.log(reciept);
+
+}
 
 const saveUserInfo = async () => {
     user = await Moralis.User.current()

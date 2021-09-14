@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -20,12 +21,12 @@ contract Artifact is ERC721URIStorage {
         HISAddress = mpAddress;
     }
 
-    function createArtifactToken(string memory tokenURI) public returns (uint) {
+    function createArtifactToken(string memory _tokenURI) public returns (uint) {
         _ArtifactTokenIds.increment();
         uint256 newArtifactTokenId = _ArtifactTokenIds.current();
 
         _mint(msg.sender, newArtifactTokenId);
-        _setTokenURI(newArtifactTokenId, tokenURI);
+        _setTokenURI(newArtifactTokenId, _tokenURI);
         setApprovalForAll(HISAddress, true);
         return newArtifactTokenId;
     }
