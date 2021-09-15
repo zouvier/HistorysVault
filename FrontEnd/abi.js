@@ -1,4 +1,4 @@
-var ArtifactContractABI= [
+var ArtifactContractABI = [
 {
   "inputs": [
     {
@@ -367,4 +367,289 @@ var ArtifactContractABI= [
   "stateMutability": "nonpayable",
   "type": "function"
 }
-],
+];
+
+var HistorysVaultContractABI = [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "artifactId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "ArtifactTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "artifactPrice",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "ArtifactNFTContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "currentArtifactOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "OriginalArtifactOwner",
+          "type": "address"
+        }
+      ],
+      "name": "ArtifactItemCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "artifactItemId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getArtifactItem",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "artifactId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "artifactPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "ArtifactTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "ArtifactNFTContract",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "currentArtifactOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "OriginalArtifactOwner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct HistorysVault.ArtifactItem",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "ArtifactNFTContract",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "ArtifactTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "artifactPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "createArtifactitem",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "ArtifactNFTContract",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "artifactId",
+          "type": "uint256"
+        }
+      ],
+      "name": "createArtifactSale",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "artifactId",
+          "type": "uint256"
+        }
+      ],
+      "name": "fetchArtifactItem",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "artifactId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "artifactPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "ArtifactTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "ArtifactNFTContract",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "currentArtifactOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "OriginalArtifactOwner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct HistorysVault.ArtifactItem",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "fetchArtifactItems",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "artifactId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "artifactPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "ArtifactTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "ArtifactNFTContract",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "currentArtifactOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "OriginalArtifactOwner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct HistorysVault.ArtifactItem[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "fetchMyArtifacts",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "artifactId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "artifactPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "ArtifactTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "ArtifactNFTContract",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "currentArtifactOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "OriginalArtifactOwner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct HistorysVault.ArtifactItem[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
