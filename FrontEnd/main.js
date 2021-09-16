@@ -163,15 +163,17 @@ createItem = async () => {
     const metadata = {
         name: createItemNameField.value,
         description: createItemDescriptionField.value,
-        image: nftFilePath,
+        image: nftFilePath
     };
     //let buff = Buffer.from(string[metadataUrl, base64])
     const nftFileMetadataFile = new Moralis.File("metadata.json",{base64 : btoa(JSON.stringify(metadata))});
     await nftFileMetadataFile.saveIPFS();
 
     const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-
+    console.log('nftFileMetadataFilePath: ' + nftFileMetadataFilePath);
     const nftId = await mintNft(nftFileMetadataFilePath);
+    // returned Undefined
+    console.log("NFT ID:" + nftId);
 
     user = await Moralis.User.current();
     const userAddress = user.get('ethAddress');
@@ -256,8 +258,8 @@ renderUserItem = async (item) => {
             login();
             return;
         }
-        await ensureMarketplaceIsApproved(item.tokenId, item.Artifact);
-        await HistorysVault.methods.addItemToMarket(item.tokenId, item.Artifact, userItem.getElementsByTagName("input")[0].value).send({from: user.get('ethAddress') });
+        await ensureMarketplaceIsApproved(item.tokenId, item.tokenAddress);
+        await HistorysVault.methods.addItemToMarket(item.tokenId, item.tokenAddress, userItem.getElementsByTagName("input")[0].value).send({from: user.get('ethAddress') });
     };
 
     userItem.id = `user-item-${item.tokenObjectId}`
@@ -295,10 +297,12 @@ getAndRenderItemData = (item, renderFunction) => {
     })
 }
 
-ensureMarketplaceIsApproved = async (tokenId, Artifact) => {
+ensureMarketplaceIsApproved = async (tokenId, tokenAddress) => {
     user = await Moralis.User.current();
     const userAddress = user.get('ethAddress');
-    const contract = new web3.eth.Contract(ArtifactContractABI, Artifact);
+    const contract = new web3.eth.Contract(ArtifactContractABI, tokenAddress);
+    console.log('Token ID: '+ tokenId);
+    console.log('contract Address:' + tokenAddress);
     const approvedAddress = await contract.methods.getApproved(tokenId).call({from: userAddress});
     if (approvedAddress != HistorysVault){
         await contract.methods.approve(HistorysVault,tokenId).send({from: userAddress});
