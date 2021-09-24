@@ -1,3 +1,17 @@
+Style Guide for coding:
+
+
+**AirBNB Style Guide: **
+
+https://github.com/airbnb/javascript - **For JS** 
+
+
+https://airbnb.io/javascript/react/ - **For React**
+
+
+
+
+
 History’s Vault
 
 
