@@ -7,8 +7,14 @@
 
 .pic {
   border-radius: 5%;
-  width: 90%;
-  height: 70%;
+  width: 60%;
+  height: 60%;
+}
+.pic2 {
+  width: 60%;
+  height: 60%;
+  margin: 10px 20%;
+  border-radius: 5%;
 }
 
 /* #landingPage {
@@ -19,3 +25,68 @@
     background-size: cover;
     height: 65rem;
 } */
+
+@media only screen and (min-width: 1201px){
+  #landingPage {
+    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../imgs/isaak-alexandre-karslian--oBfOjcoSVY-unsplash.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 65rem;
+  }
+  .pic {
+      display: none;
+    }
+
+    .text{
+      padding-top: 50px;
+      color: white;
+    }
+    .text1{
+      color: white;
+      padding-top: 300px;
+    }
+
+
+}
+
+
+@media only screen and (max-width: 1200px){
+  /*Tablets [601px -> 1200px]*/
+  .pic {
+    width: 90%;
+    height: 40%;
+  }
+  
+}
+
+  
+@media only screen and (max-width: 600px){
+  .pic {
+    width: 50%;
+    height: 50%;
+    padding: 10px 55%;
+}
+}
+
+@media only screen and (max-width: 425px){
+  .pic {
+    display: none;
+  }
+  .text1 {
+    padding-bottom: 150px;
+  }
+
+}
+
+@keyframes imgs {
+  from {
+    transform: translateY(-1100px);
+    opacity: 1;
+  }
+  to {
+    transform:translateY(1000px);
+    opacity: 1;
+  }
+}

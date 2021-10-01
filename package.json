@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/zouvier/HistorysVault#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "@openzeppelin/contracts": "^4.3.1",
+    "aos": "^3.0.0-beta.6",
     "moralis": "^0.0.42"
   }
 }
