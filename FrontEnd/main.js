@@ -1,26 +1,13 @@
-// key for initializing server. 
-//TODO: change for production
-Moralis.initialize('Izr6Zce1IB7ptfLuLMD8h57idTAMcRW4OfK1zCp4');
-Moralis.serverURL = 'https://92cgorxrw6xn.bigmoralis.com:2053/server';
-var HistorysVault = '0x6BE324C6e52f4818d893760CB7336a14689C96b3';
-var Artifact = '0xEb0860328376E779259C01F99FbF2d230f5dACfE'; 
-//@dev: authenticates the user and asks them to login with metamask, and also logout
-//const userLogOut = async () => await Moralis.User.logOut();
-//user = await Moralis.User.current()
-//@dev: helper function to hide/show elements
+Moralis.initialize("2S1eSVAt27qwFGBOWHyNREwpELoqqs3Yk0GubnJY");
+Moralis.serverURL = 'https://fvgmd1ajsght.moralishost.com:2053/server';
+const TOKEN_CONTRACT_ADDRESS = "0x5659aCD92b51947C423e76fF2b6E80A3AA1BaC68";
+const MARKETPLACE_CONTRACT_ADDRESS = "0x5432E68356a12B9Bdaf5016AD80431778d23Ef9d";
 
-hideElement = (element) => element.style.display = 'none';
-showElement = (element) => element.style.display = 'block';
-
-//@dev: this step enables moralis, allows us to use it through the window
-//@use: will render on page load
 init = async () => {
     hideElement(userItemsSection);
-    hideElement(userInfo);
-    hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
-    window.ArtifactContract = new web3.eth.Contract(ArtifactContractABI, Artifact);
-    window.HSMarketPlace = new web3.eth.Contract(HistorysVaultContractABI, HistorysVault);
+    window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
+    window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKETPLACE_CONTRACT_ADDRESS);
     initUser();
     loadItems();
 
@@ -32,6 +19,7 @@ init = async () => {
     const itemsAddedSubscription = await itemsAddedQuery.subscribe();
     itemsAddedSubscription.on("create", onItemAdded);
 }
+
 
 onItemSold = async (item) => {
     const listing = document.getElementById(`item-${item.attributes.uid}`);
@@ -50,9 +38,9 @@ onItemSold = async (item) => {
 
             const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
             if (userItemListing) userItemListing.parentNode.removeChild(userItemListing);
-          
+        
         }
-   
+
     }
 }
 
@@ -125,7 +113,7 @@ openUserInfo = async () => {
             hideElement(userAvatarImg);
         }
 
-        showElement(userInfo);
+        $('#userInfo').modal('show');
     }else{
         login();
     }
@@ -155,7 +143,7 @@ createItem = async () => {
         return;
     }
 
-    const nftFile = new Moralis.File("nftFile.png",createItemFile.files[0]);
+    const nftFile = new Moralis.File("nftFile.jpg",createItemFile.files[0]);
     await nftFile.saveIPFS();
 
     const nftFilePath = nftFile.ipfs();
@@ -163,17 +151,15 @@ createItem = async () => {
     const metadata = {
         name: createItemNameField.value,
         description: createItemDescriptionField.value,
-        image: nftFilePath
+        image: nftFilePath,
     };
-    //let buff = Buffer.from(string[metadataUrl, base64])
-    const nftFileMetadataFile = new Moralis.File("metadata.json",{base64 : btoa(JSON.stringify(metadata))});
+
+    const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
     await nftFileMetadataFile.saveIPFS();
 
     const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-    console.log('nftFileMetadataFilePath: ' + nftFileMetadataFilePath);
+
     const nftId = await mintNft(nftFileMetadataFilePath);
-    // returned Undefined
-    console.log("NFT ID:" + nftId);
 
     user = await Moralis.User.current();
     const userAddress = user.get('ethAddress');
@@ -182,8 +168,8 @@ createItem = async () => {
         case "0":
             return;
         case "1":
-            await ensureMarketplaceIsApproved(nftId, Artifact);
-            await HSMarketPlace.methods.createArtifactitem(Artifact,nftId, createItemPriceField.value).send({from: userAddress });
+            await ensureMarketplaceIsApproved(nftId, TOKEN_CONTRACT_ADDRESS);
+            await marketplaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS, createItemPriceField.value).send({from: userAddress });
             break;
         case "2":
             alert("Not yet supported!");
@@ -192,7 +178,7 @@ createItem = async () => {
 }
 
 mintNft = async (metadataUrl) => {
-    const receipt = await ArtifactContract.methods.createArtifactToken(metadataUrl).send({from: ethereum.selectedAddress});
+    const receipt = await tokenContract.methods.createItem(metadataUrl).send({from: ethereum.selectedAddress});
     console.log(receipt);
     return receipt.events.Transfer.returnValues.tokenId;
 }
@@ -200,7 +186,7 @@ mintNft = async (metadataUrl) => {
 openUserItems = async () => {
     user = await Moralis.User.current();
     if (user){    
-        showElement(userItemsSection);
+        $('#userItems').modal('show');
     }else{
         login();
     }
@@ -259,7 +245,7 @@ renderUserItem = async (item) => {
             return;
         }
         await ensureMarketplaceIsApproved(item.tokenId, item.tokenAddress);
-        await HistorysVault.methods.addItemToMarket(item.tokenId, item.tokenAddress, userItem.getElementsByTagName("input")[0].value).send({from: user.get('ethAddress') });
+        await marketplaceContract.methods.addItemToMarket(item.tokenId, item.tokenAddress, userItem.getElementsByTagName("input")[0].value).send({from: user.get('ethAddress') });
     };
 
     userItem.id = `user-item-${item.tokenObjectId}`
@@ -268,9 +254,11 @@ renderUserItem = async (item) => {
 
 renderItem = (item) => {
     const itemForSale = marketplaceItemTemplate.cloneNode(true);
+    console.log('Item for Sale:' + itemForSale);
     if (item.sellerAvatar){
         itemForSale.getElementsByTagName("img")[0].src = item.sellerAvatar.url();
         itemForSale.getElementsByTagName("img")[0].alt = item.sellerUsername;
+    
     }
 
     itemForSale.getElementsByTagName("img")[1].src = item.image;
@@ -300,12 +288,10 @@ getAndRenderItemData = (item, renderFunction) => {
 ensureMarketplaceIsApproved = async (tokenId, tokenAddress) => {
     user = await Moralis.User.current();
     const userAddress = user.get('ethAddress');
-    const contract = new web3.eth.Contract(ArtifactContractABI, tokenAddress);
-    console.log('Token ID: '+ tokenId);
-    console.log('contract Address:' + tokenAddress);
+    const contract = new web3.eth.Contract(tokenContractAbi, tokenAddress);
     const approvedAddress = await contract.methods.getApproved(tokenId).call({from: userAddress});
-    if (approvedAddress != HistorysVault){
-        await contract.methods.approve(HistorysVault,tokenId).send({from: userAddress});
+    if (approvedAddress != MARKETPLACE_CONTRACT_ADDRESS){
+        await contract.methods.approve(MARKETPLACE_CONTRACT_ADDRESS,tokenId).send({from: userAddress});
     }
 }
 
@@ -315,7 +301,7 @@ buyItem = async (item) => {
         login();
         return;
     } 
-    await HistorysVault.methods.buyItem(item.uid).send({from: user.get('ethAddress'), value: item.askingPrice});
+    await marketplaceContract.methods.buyItem(item.uid).send({from: user.get('ethAddress'), value: item.askingPrice});
 }
 
 hideElement = (element) => element.style.display = "none";
@@ -329,7 +315,7 @@ const userProfileButton = document.getElementById("btnUserInfo");
 userProfileButton.onclick = openUserInfo;
 
 const openCreateItemButton = document.getElementById("btnOpenCreateItem");
-openCreateItemButton.onclick = () => showElement(createItemForm);
+openCreateItemButton.onclick = () => $('#createItem').modal('show');
 
 //  User profile
 const userInfo = document.getElementById("userInfo");
