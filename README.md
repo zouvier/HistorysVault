@@ -40,5 +40,6 @@ Major League gamer: James)
 
 These are only some of the possible use cases on History’s Vault. There are plenty more to come.
 
+Landing Page coming up
 
 
