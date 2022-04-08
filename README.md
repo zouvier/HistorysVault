@@ -1,5 +1,5 @@
 Preview of the front end:
-https://www.figma.com/proto/0m4E3Nnjq2XaljSobYPDu7/History-Vault?node-id=638%3A2723&scaling=scale-down-width&page-id=0%3A1&starting-point-node-id=638%3A2723&show-proto-sidebar=1
+https://www.figma.com/proto/0m4E3Nnjq2XaljSobYPDu7/History-Vault?node-id=52%3A404&scaling=scale-down-width&page-id=0%3A1&starting-point-node-id=59%3A398&show-proto-sidebar=1
 
 
 Style Guide for coding:
